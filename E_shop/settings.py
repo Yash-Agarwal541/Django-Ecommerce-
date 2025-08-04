@@ -23,15 +23,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1+v7)6r!znr2k=jmu)%b%v!$f=r0v8atu25mq4io3pcan7jepg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+DEBUG = False
 
 ALLOWED_HOSTS = ['django-ecommerce-4.onrender.com']
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'   # Important for collectstatic
 
-MEDIA_URL = 'uploads/product/images/'
-MEDIA_ROOT = BASE_DIR
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'          # Where uploaded images go
 
 
 

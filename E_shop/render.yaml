@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: django-ecommerce
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn E_shop.wsgi:application"
+    staticPublishPath: staticfiles
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: E_shop.settings

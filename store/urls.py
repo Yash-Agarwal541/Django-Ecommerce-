@@ -1,7 +1,10 @@
 from django.contrib import admin
 from django.urls import path
-from store.views import index, sign_up, LoginUse, add_to_cart, payment_with_razor
-from .views import all_products, cart, category_page, product_detail, remove_from_cart
+from E_shop.settings import BASE_DIR
+from store.views import (
+    index, sign_up, LoginUse, add_to_cart, payment_with_razor,
+    all_products, cart, category_page, product_detail, remove_from_cart
+)
 from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -22,4 +25,7 @@ urlpatterns = [
     path('products/all/', all_products, name='all_products'),
 ]
 
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=BASE_DIR / 'store' / 'static')
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

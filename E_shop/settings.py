@@ -28,19 +28,9 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['django-ecommerce-4.onrender.com']
-
-import os
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

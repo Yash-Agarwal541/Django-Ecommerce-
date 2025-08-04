@@ -25,15 +25,13 @@ SECRET_KEY = 'django-insecure-1+v7)6r!znr2k=jmu)%b%v!$f=r0v8atu25mq4io3pcan7jepg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-import os
+ALLOWED_HOSTS = ['django-ecommerce-4.onrender.com']
 
-DETA_HOST = os.environ.get('DETA_SPACE_APP_HOST')
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-if DETA_HOST:
-    ALLOWED_HOSTS = [DETA_HOST]
-else:
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-
+MEDIA_URL = 'uploads/product/images/'
+MEDIA_ROOT = BASE_DIR
 
 
 

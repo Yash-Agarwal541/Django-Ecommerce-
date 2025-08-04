@@ -1,0 +1,160 @@
+<!doctype html>
+{%load static%}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>E-Shop</title>
+
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{%url 'index'%}">TechNest<span class = "navbar-brand-svg"><svg class = "navbar-brand-svg"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M91.7 96C106.3 86.8 116 70.5 116 52C116 23.3 92.7 0 64 0S12 23.3 12 52c0 16.7 7.8 31.5 20 41l0 3 0 352 0 64 64 0 0-64 373.6 0c14.6 0 26.4-11.8 26.4-26.4c0-3.7-.8-7.3-2.3-10.7L432 272l61.7-138.9c1.5-3.4 2.3-7 2.3-10.7c0-14.6-11.8-26.4-26.4-26.4L91.7 96z"/></svg></span></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto text-center">
+      <li class="nav-item active">
+        <a class="nav-link" href="{%url 'index'%}">Home <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <div class = "row" >
+        <div class = "col">
+            <ul class="navbar-nav mr-auto text-center">
+            {%if user.is_authenticated%}
+            {% if user.is_superuser %}
+             <li class="nav-item">
+              <a class="nav-link" href="{%url 'index'%}">Hello, Admin</a>
+              <li class="nav-item">
+              <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="nav-link btn btn-link p-0" style="border: none; background: none; cursor: pointer;">
+                  Logout
+                </button>
+              </form>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i></a>
+            </li>
+            </li>
+            {%else%}
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'index'%}">Hello, {{user.username}}</a>
+            </li>
+            <li class="nav-item">
+              <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="nav-link btn btn-link p-0" style="border: none; background: none; cursor: pointer;">
+                  Logout
+                </button>
+              </form>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i></a>
+            </li>
+            {%endif%}
+            {%else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'signup'%}">SignUp</a>
+            </li>
+            <li class="nav-item">
+              
+              <a class="nav-link" href="{%url 'login'%}"> Login</a>
+            </li>
+            {%endif%}
+    </ul>
+        </div>
+    </div>
+  </div>
+</nav>
+</nav>
+
+{% if messages %}
+  <div class="container mt-3">
+    {% for message in messages %}
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{ message|safe }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{%block content%}
+{%endblock%}
+<br>
+<br>
+<footer class="bg-dark text-white pt-3 pb-1">
+  <div class="container text-md-left">
+    <div class="row text-md-left">
+
+      <!-- Brand Info -->
+      <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3">
+        <h5 class="text-uppercase mb-4 font-weight-bold text-warning">TechNest</h5>
+        <p>
+          Your one-stop shop for the latest electronics, fashion, gadgets, and more. Quality and trust delivered at your doorstep.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+        <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Quick Links</h5>
+        <p><a href="{% url 'index' %}" class="text-white text-decoration-none">Home</a></p>
+        <p><a href="{% url 'cart' %}" class="text-white text-decoration-none">Cart</a></p>
+        <p><a href="{% url 'signup' %}" class="text-white text-decoration-none">Sign Up</a></p>
+        <p><a href="{% url 'login' %}" class="text-white text-decoration-none">Login</a></p>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3">
+        <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact</h5>
+        <p><i class="fas fa-home me-2"></i>  India</p>
+        <p><i class="fas fa-envelope me-2"></i> Yash Agarwal</p>
+        <p><i class="fas fa-phone me-2"></i> 911111111</p>
+      </div>
+
+    </div>
+
+    <!-- Social Icons -->
+    <div class="row align-items-center mt-4">
+      <div class="col-md-7 col-lg-8">
+        <p class="text-center text-md-left">
+          © 2025 TechNest. All Rights Reserved.
+        </p>
+      </div>
+      <div class="col-md-5 col-lg-4">
+        <div class="text-center text-md-right">
+          <a href="#" class="text-white me-4"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-white me-4"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-white me-4"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>

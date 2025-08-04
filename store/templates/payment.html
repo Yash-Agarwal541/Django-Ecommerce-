@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Secure Payment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Razorpay -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #f0f4ff, #dbeafe);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-custom {
+      background: #ffffff;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+      max-width: 450px;
+      width: 100%;
+      animation: fadeInUp 0.6s ease;
+    }
+
+    .card-custom img {
+      width: 70px;
+      margin-bottom: 20px;
+    }
+
+    .btn-pay {
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 10px;
+      transition: background 0.3s ease;
+    }
+
+    .btn-pay:hover {
+      background-color: #4338ca;
+    }
+
+    .cancel-link {
+      margin-top: 15px;
+      display: block;
+      font-size: 14px;
+      color: #ef4444;
+      text-decoration: none;
+    }
+
+    .cancel-link:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card-custom text-center">
+  <img src="{% static 'images/payment.png' %}" alt="Payment Icon">
+  <h3 class="fw-bold">Confirm & Pay</h3>
+  <p class="text-muted">You're about to pay <strong>₹{{ total|floatformat:2 }}</strong><br>via Razorpay</p>
+
+  <button id="rzp-button" class="btn btn-pay w-100 mt-3">Pay ₹{{ total|floatformat:2 }} Now</button>
+
+  <a href="{% url 'cart' %}" class="cancel-link">← Cancel and return to cart</a>
+</div>
+
+<script>
+  var options = {
+    "key": "{{ razorpay_key_id }}",
+    "amount": "{{ amount|safe }}", // amount in paise
+    "currency": "INR",
+    "name": "Your Store Name",
+    "description": "Purchase Order",
+    "order_id": "{{ order_id }}",
+    "handler": function (response) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Payment Successful!',
+        text: 'Thank you for your payment.',
+        timer: 2500,
+        showConfirmButton: false
+      }).then(() => {
+        window.location.href = "{% url 'index' %}";
+      });
+    },
+    "theme": {
+      "color": "#4f46e5"
+    }
+  };
+
+  var rzp1 = new Razorpay(options);
+  document.getElementById('rzp-button').onclick = function (e) {
+    rzp1.open();
+    e.preventDefault();
+  }
+</script>
+
+</body>
+</html>
+

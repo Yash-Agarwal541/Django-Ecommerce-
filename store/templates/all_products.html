@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-center mb-4">All Products</h2>
+  <div class="row mx-auto">
+    {% for item in products %}
+      <div class="col-md-4 col-sm-6 mb-4">
+        <div class="product-display card text-center">
+          <a href="{% url 'product_detail' slug=item.slug %}">
+            <img class="product-display-image" src="{{ item.product_image.url }}">
+            <p class="product-display-title">{{ item.name }}</p>
+          </a>
+          <p class="product-display-price">₹ {{ item.price }}</p>
+          <a href="{% url 'create_cart' item.slug %}" class="text-center">
+            <button class="product-display-btn btn-primary">Add</button>
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

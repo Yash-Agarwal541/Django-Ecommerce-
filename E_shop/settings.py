@@ -32,11 +32,13 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['django-ecommerce-4.onrender.com']
 
+import os
+
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'   # Important for collectstatic
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'          # Where uploaded images go
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 
